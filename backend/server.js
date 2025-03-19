@@ -9,10 +9,12 @@ const app = express();
 
 app.use(express.json()) // middleware that allows acceptance of JSON data in the body
 
+// supply port from the env file or fallback to default
+const PORT = process.env.PORT || 5000
 app.use("/api/products", productRoutes)
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     connectDB();
-    console.log("Server started at http://localhost:5000");
+    console.log("Server started at http://localhost:" + PORT);
 }); 
 
