@@ -1,6 +1,7 @@
 import { Box, useColorModeValue, Container, VStack, useToast, Heading, Input, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { useProductStore } from "../store/product";
+import { useNavigate } from "react-router-dom";
 
 
 const CreatePage = () => {
@@ -14,7 +15,8 @@ const CreatePage = () => {
     // Success or Error Alert
     const toast = useToast();
 
-
+    const navigate = useNavigate();
+    
     const { createProduct } = useProductStore();
 
     const handleAddProduct = async() => {
@@ -27,6 +29,9 @@ const CreatePage = () => {
             duration: 5000,
             isClosable: true
         });
+        if (success) {
+            navigate("/"); // Redirect to homepage on success
+        } 
       setNewProduct({
           name: "",
           price: "",

@@ -1,26 +1,43 @@
 import { Container, useToast, SimpleGrid, Text, VStack } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useProductStore } from '../store/product.js';
 import { ProductCard } from '../components/ProductCard.jsx';
+import { shallow } from 'zustand/shallow';
 
 const HomePage = () => {
-    const { fetchProducts, products } = useProductStore();
+    const toast = useToast();
+    // Fixed: Use separate selectors
+    const fetchProducts = useProductStore(state => state.fetchProducts);
+    const products = useProductStore(state => state.products);
+
+    const load = useCallback(async () => {
+        const result = await fetchProducts();
+        if (result?.success === false) {
+            toast({
+                title: 'Failed to fetch products',
+                description: result.message || 'Please try again later.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    }, [fetchProducts, toast]);
 
     useEffect(() => {
-        fetchProducts();
-    }, [fetchProducts]);
-    
+        load();
+    }, [load]);
+
     return (
         <Container maxW='container.xl' py='12'>
             <VStack spacing={8}>
-                <Text 
-                fontSize={'4xl'} 
-                fontWeight={'bold'} 
-                bgGradient={"linear(to-r, cyan.400, blue.500)"}
-                bgClip={'text'}
+                <Text
+                    fontSize={'4xl'}
+                    fontWeight={'bold'}
+                    bgGradient={"linear(to-r, cyan.400, blue.500)"}
+                    bgClip={'text'}
                 >
-                Available Products
+                    Available Products
                 </Text>
 
                 <SimpleGrid
@@ -29,9 +46,9 @@ const HomePage = () => {
                     mt={8}
                     w={"full"}
                 >
-                    {products.length > 0 ? (
+                    {products && products.length > 0 ? (
                         products.map((product) => (
-                            <ProductCard key={product._id} product={product} />
+                            product && <ProductCard key={product._id} product={product} />
                         ))
                     ) : (
                         <Text fontSize={'xl'} textAlign={'center'} fontWeight={'bold'} color={'gray.500'}>

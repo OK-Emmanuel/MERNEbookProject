@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {create} from "zustand";
 
 export const useProductStore = create((set) => ({
@@ -9,7 +8,7 @@ export const useProductStore = create((set) => ({
             return {success: false, message: "Please fill all fields"};
         }
 
-        const res = await fetch("api/products", {
+        const res = await fetch("/api/products", {
             method: "POST",
             headers:{
                 "Content-Type": "application/json"
@@ -22,12 +21,13 @@ export const useProductStore = create((set) => ({
         return { success: true, message: "Product created successfully" };
     },
     fetchProducts: async () => {
-        const res = await fetch("api/products");
+        const res = await fetch("/api/products");
         const data = await res.json();
         set({products: data.data});
+        return { success: true };
     },
     deleteProduct: async (pid) => {
-        const res = await fetch(`api/products/${pid}`, {
+        const res = await fetch(`/api/products/${pid}`, {
             method: "DELETE"
         });
         const data = await res.json();
@@ -35,6 +35,22 @@ export const useProductStore = create((set) => ({
         // auto update the state by removing the deleted product
         set((state) => ({products: state.products.filter((product) => product._id !== pid)}));
         return {success: true, message: "Product deleted successfully"}
+    },
+    updateProduct: async (pid, updatedProduct) => {
+        const res = await fetch(`/api/products/${pid}`,{
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedProduct)
+        });
+        const data = await res.json();
+        if (!data.success) return { success: false, message: data.message};
+        set(state => ({
+            products: state.products.map(product => product._id === pid ? data.data : product)
+        }));
+
+        return { success: true, message: "Product Updated successfully"}
     }
     
 }));
