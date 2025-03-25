@@ -2,13 +2,28 @@
 
 Techifice Store is an eBook store built using the MERN stack (MongoDB, Express, React, Node.js). This project demonstrates my skills in full-stack web application with a frontend built using React and Chakra UI, and a backend built using Express and MongoDB.
 
+![Homepage](frontend/src/assets/store%20homepage.png)
+
+[Watch the Video Demo Here](https://youtu.be/eDfGuFOzxwo)
+
 ## Features
 
 - View available eBooks
+![Homepage](frontend/src/assets/store%20homepage.png)
+
 - Add new eBooks
+![Add New Book](frontend/src/assets/Create%20Product.png)
+
 - Update existing eBooks
+![Homepage](frontend/src/assets/Edit%20Product.png)
+
 - Delete eBooks
+![Delete Ebooks](frontend/src/assets/image.png)
+
 - Light/Dark mode toggle
+![Light Mode](frontend/src/assets/light%20mode.png)
+
+
 
 ## Technologies Used
 
@@ -78,6 +93,8 @@ Techifice Store is an eBook store built using the MERN stack (MongoDB, Express, 
 ## Project Structure
 
 ### Frontend
+![Edit Page](frontend/src/assets/Edit%20Product.png)
+
 
 - `src/components`: Contains reusable React components such as `Navbar` and `ProductCard`.
 - `src/pages`: Contains page components like `HomePage` and `CreatePage`.
@@ -111,4 +128,4 @@ Techifice Store is an eBook store built using the MERN stack (MongoDB, Express, 
 ## License
 
 This project is licensed under the MIT License.
-```
+
