@@ -50,7 +50,7 @@ const CreatePage = () => {
                 p={6} rounded={"lg"} shadow={"md"}>
             <VStack spacing={8}>
                 <Input
-                    placeholder="Product NAme"
+                    placeholder="Product Name"
                     value={newProduct.name}
                     onChange={(e) => setNewProduct({
                         ...newProduct, name: e.target.value
